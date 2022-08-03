@@ -291,7 +291,7 @@ add_custom_target(${PROJECT_NAME}.nacp
         ${SWITCH_VERSION}
         ${PROJECT_NAME}.nacp
 )
-if (DEFINED BUILDIN_ROMFS)
+if (BUILDIN_ROMFS)
     message(STATUS "BUILDIN_ROMFS ON")
     add_custom_target(${PROJECT_NAME}.nro ALL
         COMMAND ${DEVKITPRO}/tools/bin/elf2nro
