@@ -2,6 +2,8 @@
 
 ![吉里吉里アイコン](icon.jpg)
 
+### This is a fork only for repair build and bug problems of original archived project.
+
 Please read [README.en_US.md](https://github.com/uyjulian/krkrs/blob/master/README.en_US.md) for English documentation.  
 
 このリポジトリには、ニンテンドースイッチに移植された吉里吉里互換のコアが含まれています。  
