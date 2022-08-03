@@ -291,7 +291,7 @@ add_custom_target(${PROJECT_NAME}.nacp
 )
 add_custom_target(${PROJECT_NAME}.nro ALL
     COMMAND ${DEVKITPRO}/tools/bin/elf2nro
-        ${PROJECT_NAME}
+        ${PROJECT_NAME}.elf
         ${PROJECT_NAME}.nro
         --icon=${CMAKE_SOURCE_DIR}/icon.jpg
         --nacp=${PROJECT_NAME}.nacp
