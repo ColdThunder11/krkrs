@@ -281,6 +281,8 @@ target_compile_options(${PROJECT_NAME} PUBLIC $<$<COMPILE_LANGUAGE:CXX>:${CXX_FL
 target_compile_options(${PROJECT_NAME} PUBLIC $<$<CONFIG:RELEASE>:${OPTIMIZATION_FLAGS}>)
 target_compile_options(${PROJECT_NAME} PUBLIC $<$<CONFIG:RELWITHDEBINFO>:${OPTIMIZATION_FLAGS}>)
 
+option(BUILDIN_ROMFS "buildin romfs opiton" OFF)
+
 add_custom_target(${PROJECT_NAME}.nacp
     COMMAND ${DEVKITPRO}/tools/bin/nacptool
         --create
@@ -289,11 +291,25 @@ add_custom_target(${PROJECT_NAME}.nacp
         ${SWITCH_VERSION}
         ${PROJECT_NAME}.nacp
 )
-add_custom_target(${PROJECT_NAME}.nro ALL
-    COMMAND ${DEVKITPRO}/tools/bin/elf2nro
-        ${PROJECT_NAME}.elf
-        ${PROJECT_NAME}.nro
-        --icon=${CMAKE_SOURCE_DIR}/icon.jpg
-        --nacp=${PROJECT_NAME}.nacp
-    DEPENDS ${PROJECT_NAME}.nacp ${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/icon.jpg
-)
+if (DEFINED BUILDIN_ROMFS)
+    message(STATUS "BUILDIN_ROMFS ON")
+    add_custom_target(${PROJECT_NAME}.nro ALL
+        COMMAND ${DEVKITPRO}/tools/bin/elf2nro
+            ${PROJECT_NAME}.elf
+            ${PROJECT_NAME}.nro
+            --icon=${CMAKE_SOURCE_DIR}/icon.jpg
+            --nacp=${PROJECT_NAME}.nacp
+            --romfsdir=${CMAKE_SOURCE_DIR}/romfs
+        DEPENDS ${PROJECT_NAME}.nacp ${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/icon.jpg
+    )
+else()
+    message(STATUS "BUILDIN_ROMFS OFF")
+    add_custom_target(${PROJECT_NAME}.nro ALL
+        COMMAND ${DEVKITPRO}/tools/bin/elf2nro
+            ${PROJECT_NAME}.elf
+            ${PROJECT_NAME}.nro
+            --icon=${CMAKE_SOURCE_DIR}/icon.jpg
+            --nacp=${PROJECT_NAME}.nacp
+        DEPENDS ${PROJECT_NAME}.nacp ${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/icon.jpg
+    )
+endif()
